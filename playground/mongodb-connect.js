@@ -15,6 +15,8 @@ var app = express();
 
 var a;
 
+var port = procees.env.PORT  || 3000;
+
 MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
         if(err) {
            return console.log('unable to connect to mongoDb server', err);
@@ -71,4 +73,4 @@ app.get('/', (req, res) => {
  res.send(a);
 });
 
-app.listen(3000);
+app.listen(port);
