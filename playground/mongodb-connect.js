@@ -1,5 +1,8 @@
 // const MongoClient = require('mongodb').MongoClient;
 const { MongoClient, ObjectID } = require('mongodb');
+const express = require('express');
+
+var app = express();
 
 // var obj = new ObjectID();
 // console.log(obj);
@@ -9,6 +12,8 @@ const { MongoClient, ObjectID } = require('mongodb');
 //     age: 25
 // };
 // var {name} = user;
+
+var a;
 
 MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
         if(err) {
@@ -40,12 +45,13 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
         //     console.log(JSON.stringify(res.ops, undefined, 2));
         // })
 
-        // db.collection('UsersWithId').find({location: "hinjewadi pune"}).toArray().then((docs) => {
-        //     console.log('Todos');
-        //     console.log(JSON.stringify(docs, undefined, 2));
-        // }, (err) => {
-        //     console.log(err);
-        // })
+        db.collection('UsersWithId').find({location: "hinjewadi pune"}).toArray().then((docs) => {
+            console.log('Todos');
+            a = docs;
+            console.log(JSON.stringify(docs, undefined, 2));
+        }, (err) => {
+            console.log(err);
+        })
 
         // db.collection('UsersWithId').find({
         //     _id: new ObjectID('5b388181b6fc0fdcb0d81288')
@@ -53,9 +59,16 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
         //         console.log(JSON.stringify(docs, undefined, 2));
         //     }))
 
-        db.collection('UsersWithId').find().count().then(((count)=>{
-                console.log(count);
-            }))
+        // db.collection('UsersWithId').find().count().then(((count)=>{
+
+        //         console.log(count);
+        //     }))
 
         client.close();
-})
+});
+
+app.get('/', (req, res) => {
+ res.send(a);
+});
+
+app.listen(3000);
