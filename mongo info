@@ -1,0 +1,14 @@
+./mongod --dbpath ~/desktop/mongo-data  --> for stablishing data connection
+
+./mongo  --for data insertion
+
+db.Todos.insert({text: 'film new node course'})   --for insertion
+db.Todos.find()   --for finding data
+
+//for mongod command rnning , we need one more installation , robomongo
+//robomongo is graphical user interface for managing your database
+
+
+The official MongoDB driver for Node.js. Provides a high-level API on top of mongodb-core that is meant for end users.
+
+mongo is not going to start databse untill we inset some data into this
