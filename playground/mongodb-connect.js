@@ -15,7 +15,7 @@ var app = express();
 
 var a;
 
-var port = procees.env.PORT  || 3000;
+var port = process.env.PORT  || 3000;
 
 MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
         if(err) {
