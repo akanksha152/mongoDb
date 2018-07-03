@@ -2,8 +2,10 @@ const {mongoose} = require('./db/mongoose');
 var {Todo} = require('./models/todo');
 var express = require('express');
 var bodyParser = require('body-parser');
-
+const {ObjectId} = require('mongodb');
 var app =express();
+
+const port = process.env.PORT || 3000;
 
 // var newTodo = new Todo({
 //     text: 'Cooking dinner'
@@ -45,10 +47,30 @@ res.send({todos});
 }, (e) => {
     res.status(400).send(e);
 })
+});
+
+app.get('/todos/:id', (req, res) => {
+    var id = req.params.id;
+    if(!ObjectId.isValid(id)) {
+        return res.status(404).send();
+    }
+   
+    if(ObjectId.isValid(id)){
+        Todo.findById(id).then((todos) => {
+            res.send({todos});
+        })
+    }
+    else {
+        res.send('error');
+        console.log('error');
+    }
+
 })
 
 
-app.listen(3000);
+app.listen(port, () => {
+    console.log(`statred at port : ${port}`)
+});
 
 module.exports = {
     app
