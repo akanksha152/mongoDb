@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 const {ObjectId} = require('mongodb');
 var app =express();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3003;
 
 // var newTodo = new Todo({
 //     text: 'Cooking dinner'
@@ -65,8 +65,29 @@ app.get('/todos/:id', (req, res) => {
         console.log('error');
     }
 
-})
-
+});
+app.delete('/todos/delete/:id', (req, res) => {
+    var id = req.params.id;
+    
+console.log(id);
+    if(!ObjectId.isValid(id)) {
+        console.log('sddad');
+        return res.status(404).send();
+    };
+    if(ObjectId.isValid(id)){
+        Todo.findByIdAndRemove(id).then((todos) => {
+            if(!todos) {
+                res.status(404).send();
+            }
+            console.log(todos);
+            res.send({todos});
+        }).catch(err => res.status(404).send());
+    }
+    else {
+        res.status(404).send('error');
+        console.log('error');
+    }
+});
 
 app.listen(port, () => {
     console.log(`statred at port : ${port}`)
